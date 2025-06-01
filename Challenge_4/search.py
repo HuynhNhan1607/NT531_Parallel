@@ -69,7 +69,7 @@ def MAIN(input_file="data.txt", key=20):
         return -1
     
     # Tìm kiếm nhanh một mẫu ngẫu nhiên
-    sample_size = min(5000, n//10)
+    sample_size = min(1000, n//10)
     if sample_size > 0:
         sampled_indices = random.sample(range(n), sample_size)
         for i in sampled_indices:
@@ -119,6 +119,6 @@ def MAIN(input_file="data.txt", key=20):
 
 if __name__ == "__main__":
     start = time.time()
-    result = MAIN(r"C:\Users\HuynhNhan1607\Downloads\NT531_Parallel\Challenge_4\data.txt", 999)
+    result = MAIN("data.txt", 999)
     end = time.time()
     print(f"Kết quả: {result}, thời gian: {end - start:.4f}s")

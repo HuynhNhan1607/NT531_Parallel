@@ -1,3 +1,4 @@
+import time
 # --------------------- FAST-DOUBLING FIBONACCI ----------------------
 def _fib_pair(n):                       # trả về (F(n), F(n+1)) mod MOD
     if n == 0:
@@ -18,6 +19,7 @@ def _worker(idx):
 # --------------------- MAIN (theo format yêu cầu) -------------------
 def MAIN(input_filename = "input.txt"):
     # ---- 1. Đọc dữ liệu ----
+    start = time.time()
     with open(input_filename, 'r', encoding='utf-8') as f:
         first = f.readline().strip().split()
         N, Q_val = int(first[0]), int(first[1])
@@ -38,6 +40,8 @@ def MAIN(input_filename = "input.txt"):
             res = pool.map(_worker, A, chunksize=len(A)//(cpu_cnt*4)+1)
 
     # ---- 4. Trả về kết quả dưới dạng chuỗi ----
+    end = time.time()
+    print(end - start)
     return '\n'.join(str(x) for x in res)
 
 # ------- Hàm init để truyền MOD cho mỗi process (tránh pickle lớn) --
@@ -46,8 +50,4 @@ def _init_mod(q):
     MOD = q
 
 if __name__ == '__main__':
-    import tempfile, os
-    tmp = tempfile.NamedTemporaryFile('w+', delete=False)
-    tmp.write('4 1000000000\n3\n4\n5\n6\n'); tmp.close()
-    print(MAIN(tmp.name))                # => 3\n5\n8
-    os.unlink(tmp.name)
+    MAIN("input.txt")          
