@@ -4,12 +4,7 @@ import math
 import concurrent.futures              # đã được phép dùng
 import os                               # chỉ để lấy số CPU (được phép)
 
-import math
-import concurrent.futures
-import os
-
 def merge_sort(arr):
-    """Thuật toán Merge Sort thuần túy (đệ quy)."""
     if len(arr) <= 1:
         return arr
     mid = len(arr) // 2
@@ -18,7 +13,6 @@ def merge_sort(arr):
     return merge_two(left, right)
 
 def merge_two(left, right):
-    """Trộn hai mảng đã sắp xếp."""
     merged = []
     i = j = 0
     while i < len(left) and j < len(right):
@@ -31,7 +25,6 @@ def merge_two(left, right):
     return merged
 
 def _parallel_sort(chunk):
-    """Hàm chạy trong tiến trình con: sắp xếp bằng merge sort."""
     return merge_sort(chunk)
 
 def MAIN(arrayA):
@@ -62,9 +55,13 @@ def MAIN(arrayA):
 #####################  Unit test nhanh  ####################
 if __name__ == "__main__":
     import random, time
-    arr = [random.randint(-10**9, 10**9) for _ in range(1_000_000)]
+    SIZE = 1_000_000
+    data = [random.randint(-10**9, 10**9) for _ in range(SIZE)]
+
     t0 = time.perf_counter()
-    out = MAIN(arr)
+    result = MAIN(data)
     t1 = time.perf_counter()
-    assert out == sorted(arr), "Kết quả sai!"
-    print(f"✔ Passed – thời gian {t1 - t0:.2f}s với {len(arr):,} phần tử.")
+
+    assert result == sorted(data)
+    print(f"✓ Sorted {SIZE:,} items in {t1 - t0:.2f} s "
+          f"using {os.cpu_count() or 4} CPU cores")

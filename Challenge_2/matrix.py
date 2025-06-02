@@ -20,7 +20,11 @@ def MAIN(matrix_a, matrix_b):
     cpu_count = min(4, multiprocessing.cpu_count())  # max 4 core
 
     # Chia đều số dòng cho số process
-    chunk_size = (n + cpu_count - 1) // cpu_count
+    # chunk_size = (n + cpu_count - 1) // cpu_count
+    chunks_per_core = 2  # hoặc 3 nếu muốn chia nhỏ hơn nữa
+    total_chunks = cpu_count * chunks_per_core
+    chunk_size = (n + total_chunks - 1) // total_chunks
+
     args_list = []
     for i in range(0, n, chunk_size):
         args_list.append((matrix_a, matrix_b, i, min(i + chunk_size, n)))
@@ -35,3 +39,15 @@ def MAIN(matrix_a, matrix_b):
             matrix_c[row_start + idx] = row
 
     return matrix_c
+
+
+if __name__ == "__main__":
+    import random, time
+    N = 1000
+    A = [[random.randint(0, 9) for _ in range(N)] for _ in range(N)]
+    B = [[random.randint(0, 9) for _ in range(N)] for _ in range(N)]
+
+    t0 = time.perf_counter()
+    C = MAIN(A, B)
+    t1 = time.perf_counter()
+    print(f"✓ Done {N}×{N} in {t1 - t0:.2f}s")

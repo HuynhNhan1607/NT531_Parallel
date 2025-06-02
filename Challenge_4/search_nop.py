@@ -44,6 +44,9 @@ def MAIN(input_file="data.txt", key=20):
                 return result
     
     return -1
-
+import time
 if __name__ == "__main__":
-    print(MAIN("data.txt", 123))
+    start = time.time()
+    result = MAIN("./demo_data.txt", 999)
+    end = time.time()
+    print(f"Kết quả: {result}, thời gian: {end - start:.4f}s")

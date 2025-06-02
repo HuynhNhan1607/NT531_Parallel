@@ -24,3 +24,13 @@ def MAIN(input_filename="input.txt"):
         results = list(pool.map(_fib_mod, jobs, chunksize=1_024))
 
     return results
+
+if __name__ == "__main__":
+    # Tạo file demo nhỏ
+    demo = "demo.txt"
+    with open(demo, "w") as f:
+        f.write("8 1000000000\n")          # N=8, Q=1e9
+        f.write("\n".join(map(str, [3, 4, 5, 30, 31, 32, 1_000_000, 12345678])))
+
+    out = MAIN(demo)
+    print(out)
